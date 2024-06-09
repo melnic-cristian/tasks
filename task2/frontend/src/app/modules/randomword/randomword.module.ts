@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PostsRoutingModule } from './randomword-routing.module';
+import { RandomwordRoutingModule } from './randomword-routing.module';
 import { RandomwordComponent } from './randomword.component';
 import { CommonModule } from '@angular/common';
 import { RandomwordService } from './services/randomword.service';
@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
   ],
   imports: [
     CommonModule,
-    PostsRoutingModule,
+    RandomwordRoutingModule,
     MatButtonModule,
     MatCardModule
   ],
