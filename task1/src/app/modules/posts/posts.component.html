@@ -1,0 +1,55 @@
+<mat-toolbar class="toolbar-container" color="primary">
+    <span>POSTS</span>
+</mat-toolbar>
+<div class="container">
+    <div *ngIf="loadingPosts" class="loading-spinner-container">
+        <mat-spinner class="loading-spinner"></mat-spinner>
+    </div>
+    <ng-container *ngIf="!loadingPosts">
+        <ng-container *ngIf="posts.length > 0; else noPosts">
+            <mat-card *ngFor="let post of posts" class="post-card">
+                <mat-card-header>
+                    <mat-card-title>{{ post.title }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{ post.body }}</p>
+                    <div *ngIf="post.showComments">
+                        <h3>Comments:</h3>
+                        <div *ngIf="post.loadingComments" class="loading-spinner-container">
+                            <mat-spinner class="loading-spinner"></mat-spinner>
+                        </div>
+                        <div *ngIf="!post.loadingComments">
+                            <div *ngIf="post.comments.length > 0; else noComments">
+                                <mat-card *ngFor="let comment of post.comments" class="comment-card">
+                                    <mat-card-header>
+                                        <mat-card-title>{{ comment.name }}</mat-card-title>
+                                        <mat-card-subtitle>{{ comment.email }}</mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <p>{{ comment.body }}</p>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                            <ng-template #noComments>
+                                <p>No comments available.</p>
+                            </ng-template>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button (click)="toggleComments(post)">
+                        {{ post.showComments ? 'Hide Comments' : 'View Comments' }}
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <div class="pagination">
+                <button mat-button (click)="prevPage()" [disabled]="page === 1">Previous</button>
+                <span>Page {{ page }} of {{ totalPages }}</span>
+                <button mat-button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+            </div>
+        </ng-container>
+        <ng-template #noPosts>
+            <p>No posts available.</p>
+        </ng-template>
+    </ng-container>
+</div>
